@@ -86,13 +86,16 @@ fun ProfileCard(){
 
 @Composable
 fun CurrentTasksCard(){
-    val tasksList: List<String> = listOf("Проверка боеприпаса", "Проверка размера боеприпаса", "Проверка веса боеприпаса", "Проверка боеприпаса", "Проверка размера боеприпаса", "Проверка веса боеприпаса", "Проверка боеприпаса", "Проверка размера боеприпаса", "Проверка веса боеприпаса")
+    val tasksList: MutableList<String> = mutableListOf("Т-90М Прорыв", "Т-80У",
+                                                        "Т-80БВМ", "Т-72БЗ", "Т-72 Урал",
+                                                        "Т-64А", "БТР-80",
+                                                        "БМП-2")
     Card(modifier = Modifier.fillMaxSize()) {
         Column(verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFA9D3A8))
             .padding(16.dp)) {
-            Text(text = "Текущие задачи:", fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.04f))
+            Text(text = "Проверка состояния военной техники:", fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.04f))
             Spacer(modifier = Modifier.height(16.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier
                 .fillMaxWidth()
