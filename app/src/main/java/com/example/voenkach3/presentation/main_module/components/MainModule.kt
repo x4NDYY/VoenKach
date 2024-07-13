@@ -1,4 +1,4 @@
-package com.example.voenkach3.presentation.main_module
+package com.example.voenkach3.presentation.main_module.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
