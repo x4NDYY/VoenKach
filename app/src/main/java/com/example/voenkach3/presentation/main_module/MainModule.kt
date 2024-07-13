@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -86,16 +87,15 @@ fun ProfileCard(){
 
 @Composable
 fun CurrentTasksCard(){
-    val tasksList: MutableList<String> = mutableListOf("Т-90М Прорыв", "Т-80У",
-                                                        "Т-80БВМ", "Т-72БЗ", "Т-72 Урал",
-                                                        "Т-64А", "БТР-80",
-                                                        "БМП-2")
+    val tasksList: MutableList<String> = mutableListOf("Двигатель", "Ходовая часть",
+                                                        "Трансмиссия", "Система охлаждения", "Электрическая система",
+                                                        "Система тормозов")
     Card(modifier = Modifier.fillMaxSize()) {
         Column(verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFA9D3A8))
             .padding(16.dp)) {
-            Text(text = "Проверка состояния военной техники:", fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.04f))
+            Text(text = "Тестирование военного образца:", fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.04f))
             Spacer(modifier = Modifier.height(16.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier
                 .fillMaxWidth()
@@ -110,7 +110,7 @@ fun CurrentTasksCard(){
                                 Text(text = (index + 1).toString() + ". ")
                                 Text(text = task)
                             }
-                            Icon(imageVector = Icons.Default.Close, contentDescription = "")
+                            //Icon(imageVector = Icons.Default.Close, contentDescription = "")
                         }
                     }
                 }
@@ -123,6 +123,49 @@ fun CurrentTasksCard(){
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "Дата: 12.07.2024", fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.04f))
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AddDetailCardPreview(){
+    AddDetailCard()
+}
+
+@Composable
+fun AddDetailCard() {
+    Card() {
+        Column(Modifier.padding(16.dp)) {
+            Row() {
+                Text(text = "Добавить деталь")
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(imageVector = Icons.Default.Close, contentDescription = "close")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
+                value = "",
+                onValueChange = {},
+                minLines = 1,
+                modifier = Modifier.fillMaxWidth(),
+                label = {
+                    Text(
+                        text = "Название детали"
+                    )
+                })
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
+                value = "",
+                onValueChange = {},
+                minLines = 4,
+                modifier = Modifier.fillMaxWidth(),
+                label = {
+                    Text(
+                        text = "Описание"
+                    )
+                })
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "ОК", modifier = Modifier.align(alignment = Alignment.End))
         }
     }
 }
