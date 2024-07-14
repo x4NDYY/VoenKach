@@ -20,28 +20,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.voenkach3.R
+import com.example.voenkach3.navigation.Screen
 
 @Preview(showBackground = true)
 @Composable
 fun StartModulePreview(){
-    StartModule()
+    //StartModule()
 }
 
 @Composable
-fun StartModule(){
+fun StartModule(navController: NavHostController){
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         Image(painter = painterResource(id = R.drawable.flag), contentDescription = "", contentScale = ContentScale.Crop, modifier = Modifier.matchParentSize())
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painterResource(id = R.drawable.logo), contentDescription = "logo")
-            TextButton(onClick = {},
+            TextButton(onClick = { navController.navigate(Screen.Registration.route) },
                 colors = ButtonDefaults.textButtonColors(contentColor = Color.Black, containerColor = Color.White),
                 modifier = Modifier.width(250.dp)
             ) {
                 Text(text = "Регистрация", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
             Spacer(modifier = Modifier.height(8.dp))
-            TextButton(onClick = {},
+            TextButton(onClick = { navController.navigate(Screen.Login.route) },
                 colors = ButtonDefaults.textButtonColors(contentColor = Color.Black, containerColor = Color.White),
                 modifier = Modifier.width(250.dp)
             ) {

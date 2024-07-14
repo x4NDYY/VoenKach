@@ -17,17 +17,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.voenkach3.R
+import com.example.voenkach3.navigation.Screen
 import com.example.voenkach3.presentation.universal.CustomTextField
 
 @Preview(showBackground = true)
 @Composable
 fun LoginModulePreview(){
-    LoginModule()
+    //LoginModule()
 }
 
 @Composable
-fun LoginModule() {
+fun LoginModule(navController: NavHostController) {
 
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         Image(painter = painterResource(id = R.drawable.flag), contentDescription = "", contentScale = ContentScale.Crop, modifier = Modifier.matchParentSize())
@@ -49,7 +51,7 @@ fun LoginModule() {
 //                leadingIcon = { Image(painter = painterResource(id = R.drawable.passwordlogo), contentDescription = "")})
             CustomTextField(title = "Пароль", imageId = R.drawable.passwordlogo)
             Spacer(modifier = Modifier.height(16.dp))
-            TextButton(onClick = {},
+            TextButton(onClick = { navController.navigate(Screen.Main.route) },
                 colors = ButtonDefaults.textButtonColors(contentColor = Color.Black, containerColor = Color.White)
             ) {
                 Text(text = "Продолжить")

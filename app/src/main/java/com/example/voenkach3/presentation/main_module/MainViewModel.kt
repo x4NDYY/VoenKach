@@ -5,6 +5,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+data class DetailInfo(
+    val nameOfDetail: String = "",
+    var isDetailOk: Boolean = false,
+)
 data class CustomDetailInformation(
     val nameOfDetail: String = "",
     val descriptionOfDetail: String = "",
@@ -12,7 +16,9 @@ data class CustomDetailInformation(
 )
 
 data class MainState(
-    val detailList: MutableMap<String, Boolean> = mutableMapOf(),
+    val detailList: MutableList<DetailInfo> = mutableListOf(DetailInfo("Двигатель"), DetailInfo("Ходовая часть"),
+        DetailInfo("Трансмиссия"), DetailInfo("Система охлаждения"), DetailInfo("Электрическая система"),
+        DetailInfo("Система тормозов")),
     val nameOfVehicle: String = "",
     val serialNumberOfVehicle: String = "",
     val customDetailInformation: CustomDetailInformation = CustomDetailInformation()
@@ -35,23 +41,40 @@ class MainViewModel:ViewModel() {
     }
 
     fun addDetailToList(nameOfDetail: String){
-        val newDetailList = _mainState.value.detailList.toMutableMap()
-        newDetailList[nameOfDetail] = false
+        val newDetailList = _mainState.value.detailList.toMutableList()
+        newDetailList.add(DetailInfo(nameOfDetail))
         _mainState.update { currentState ->
             currentState.copy(detailList = newDetailList)
         }
     }
 
     fun changeStateOfDetail(nameOfDetail: String){
-        val newDetailList = _mainState.value.detailList.toMutableMap()
-        newDetailList[nameOfDetail] = !newDetailList.getValue(nameOfDetail)
+        val newDetailList = _mainState.value.detailList.map { detail ->
+            if (detail.nameOfDetail == nameOfDetail) {
+                detail.copy(isDetailOk = !detail.isDetailOk)
+            } else {
+                detail
+            }
+        }
+
+        // Обновляем состояние
         _mainState.update { currentState ->
-            currentState.copy(detailList = newDetailList) }
+            currentState.copy(detailList = newDetailList.toMutableList())
+        }
     }
 
     fun removeDetailFromList(nameOfDetail: String){
-        val newDetailList = _mainState.value.detailList.toMutableMap()
-        newDetailList.remove(nameOfDetail)
+        val newDetailList = _mainState.value.detailList.toMutableList()
+        var removedDetail: DetailInfo? = null
+        for (ix in newDetailList){
+            if (ix.nameOfDetail == nameOfDetail){
+                removedDetail = ix
+            }
+        }
+        if (removedDetail != null){
+            newDetailList.remove(removedDetail)
+        }
+
         _mainState.update { currentState ->
             currentState.copy(detailList = newDetailList)
         }
@@ -66,14 +89,14 @@ class MainViewModel:ViewModel() {
 
     fun changeNameOfDetail(nameOfDetail: String){
         _mainState.update { currentState ->
-            val newCustomDetailInformation = CustomDetailInformation(nameOfDetail = nameOfDetail)
+            val newCustomDetailInformation = currentState.customDetailInformation.copy(nameOfDetail = nameOfDetail)
             currentState.copy(customDetailInformation = newCustomDetailInformation)
         }
     }
 
     fun changeDescriptionOfDetail(descriptionOfDetail: String){
         _mainState.update { currentState ->
-            val newCustomDetailInformation = CustomDetailInformation(descriptionOfDetail = descriptionOfDetail)
+            val newCustomDetailInformation = currentState.customDetailInformation.copy(descriptionOfDetail = descriptionOfDetail)
             currentState.copy(customDetailInformation = newCustomDetailInformation)
         }
     }
